@@ -1,0 +1,8 @@
+
+*.pyc
+help/*
+/media/*.*
+/staticfiles/*
+.env
+/media/*
+node_modules/
