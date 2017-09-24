@@ -143,3 +143,5 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+SERVICE_CODE = os.environ.get('SERVICE_CODE','*384*347')
