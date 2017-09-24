@@ -10,5 +10,5 @@ from .views import *
 
 urlpatterns = [
     url(r'^user/$', Uapp.as_view(), name='uapp'),
-    url(r'^africascalling_callback/$', ACUSSDCallback.as_view(), name='acussd'),
+    url(r'^africastalking_callback/$', ACUSSDCallback.as_view(), name='acussd'),
 ]
