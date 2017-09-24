@@ -71,7 +71,7 @@ class QuerySession(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.session_id
+        return str(self.session_id)
     
 
 class Query(models.Model):

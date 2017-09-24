@@ -10,11 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
-
+import os, sys, traceback, ast
+import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+BASE_URL = os.environ.get('BASE_URL','http://localhost:8000')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -23,10 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c_(hxtov88a+w%4wl5f+)np3043ql7p_nj!au%pn=yor9kxiux'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = ast.literal_eval(os.environ.get('DJANGO_DEBUG','True'))
 
 ALLOWED_HOSTS = [
-    '192.168.100.15',
+    '192.168.42.82',
     'localhost',
     '127.0.0.1'
     ]
@@ -82,10 +84,16 @@ WSGI_APPLICATION = 'carescue.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'carescue_dev',
+        'USER' : 'postgres',
+        'PASSWORD' : 'password',
+        'HOST' : 'localhost'
+    },
 }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation

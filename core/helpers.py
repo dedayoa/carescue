@@ -20,7 +20,7 @@ def nearest_mechanics(session_id, x=10):
     res = []
     for mechanic in Mechanic.objects.all():
         dist_b = distance_between((requester.loc_cood_x, requester.loc_cood_y), (mechanic.office_cood_x, mechanic.office_cood_y))
-        (mechanic.id, dist_b).append(res)
+        res.append((mechanic.id, dist_b))
     
     #sort
     return (sorted(res, key=lambda tup: tup[1]))[:x]
@@ -32,7 +32,7 @@ def nearest_towing_vehicle(session_id, x=10):
     res = []
     for tow_veh in TowingVehicle.objects.all():
         dist_b = distance_between((requester.loc_cood_x, requester.loc_cood_y), (tow_veh.loc_cood_x, tow_veh.loc_cood_y))
-        (tow_veh.id, dist_b).append(res)
+        res.append((tow_veh.id, dist_b))
     
     #sort
     return (sorted(res, key=lambda tup: tup[1]))[:x]
