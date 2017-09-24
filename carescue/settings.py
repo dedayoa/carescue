@@ -29,6 +29,7 @@ DEBUG = ast.literal_eval(os.environ.get('DJANGO_DEBUG','True'))
 
 ALLOWED_HOSTS = [
     '192.168.42.82',
+    'carescue.herokuapp.com',
     'localhost',
     '127.0.0.1'
     ]
