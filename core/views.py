@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.conf import settings
 from django import views
 from africastalking.AfricasTalkingGateway import (AfricasTalkingGateway, AfricasTalkingGatewayException)
 from .models import Query, QuerySession, Requester, Mechanic, TowingVehicle
@@ -15,6 +16,7 @@ class Uapp(views.View):
     params = {}
     
     def get(self, request):
+        self.params["SERVICE_CODE"] = settings.SERVICE_CODE
         return render(self.request, self.template_name, self.params)
 
 
