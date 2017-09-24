@@ -25,9 +25,13 @@ class ACUSSDCallback(views.View):
     # africastalking callback
     def post(self, request):
         session_id = request.POST.get("sessionId", None)
+        print(session_id)
         serviceCode = request.POST.get("serviceCode", None)
+        print(serviceCode)
         phoneNumber = request.POST.get("phoneNumber", None)
+        print(phoneNumber)
         text = request.POST.get("text", None)
+        print(text)
         
         requester = Requester.objects.filter(Q(mobile_1=phoneNumber) | Q(mobile_2=phoneNumber))
         
