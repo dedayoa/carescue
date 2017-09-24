@@ -25,6 +25,7 @@
     	<h1 style="margin-top: 5rem;">CaRescue</h1>
     	<div id="stat">[[getCoodStatus]]</div>
     	<button id="gh-button" v-on:click="getLocation">Get Help</button>
+    	<a id="hiddenA" style="display:none;">Click</a>
     </center>
 
     <!-- Optional JavaScript -->
@@ -75,7 +76,10 @@
 			    let x = Math.floor(this.cood[0]*10000);
 			    let y = Math.floor(this.cood[1]*10000);
 			    
-			    window.location.href = "tel: *123*"+x+"*"+y+"#";
+			    //window.location.href = "tel: *123*"+x+"*"+y+"#";
+			    $('#hiddenA').prop("href", "tel: {{SERVICE_CODE}}*"+x+"*"+y+"#");
+			    $('#hiddenA')[0].click();
+			    
 			}
 		  },
 		  watch: {
