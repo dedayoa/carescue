@@ -39,9 +39,9 @@ class ACUSSDCallback(views.View):
         text = request.POST.get("text", None)
         print(text)
         
-        requester = Requester.objects.filter(Q(mobile_1=phoneNumber) | Q(mobile_2=phoneNumber)).first()
+        requester = Requester.objects.get(Q(mobile_1=phoneNumber) | Q(mobile_2=phoneNumber))
         
-        if not requester.count():
+        if not requester:
             menu_text = "END User Not Found"
         
         elif text == "":
