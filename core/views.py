@@ -79,6 +79,8 @@ class ACUSSDCallback(views.View):
             
             elif text == "0":
                 menu_text = "END Goodbye"
+                
+            return HttpResponse(menu_text, content_type="text/plain", status=200)
         
         except QuerySession.DoesNotExist:
             #iterate through text and get coordinates
@@ -97,5 +99,5 @@ class ACUSSDCallback(views.View):
             menu_text += "3. Car Part \n"
             menu_text += "4. Cab"
             
-        return HttpResponse(menu_text, content_type="text/plain", status=200)
+            return HttpResponse(menu_text, content_type="text/plain", status=200)
         
