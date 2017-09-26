@@ -48,9 +48,9 @@ class ACUSSDCallback(views.View):
             menu_text = "END Invalid Entry"
             
         #check if session already exists
-        qs = QuerySession.objects.get(session_id=session_id)
+        try:
+            qs = QuerySession.objects.get(session_id=session_id)
         
-        if qs:
             if text == "%s*%s*1"%(qs.loc_cood_x,qs.loc_cood_y):
                 menu_text = "CON Mechanics near you... \n"
                 for mechanic in nearest_mechanics(session_id, 3):
@@ -80,7 +80,7 @@ class ACUSSDCallback(views.View):
             elif text == "0":
                 menu_text = "END Goodbye"
         
-        else:
+        except QuerySession.DoesNotExist:
             #iterate through text and get coordinates
             coods = text.split("*")
             QuerySession.objects.create(
