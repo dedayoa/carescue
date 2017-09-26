@@ -7,6 +7,8 @@ from django.db.models import Q
 from .helpers import nearest_mechanics
 from core.helpers import nearest_towing_vehicle
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -23,6 +25,8 @@ class Uapp(views.View):
 username = "dedayoa@gmail.com"
 apikey   = "15a977d5795aa310d9b3b8fc7b859d23f05c1440dcc7f674702ee613fdbc8343"
 
+
+@method_decorator(csrf_exempt, name='dispatch')
 class ACUSSDCallback(views.View):
     # africastalking callback
     def post(self, request):
