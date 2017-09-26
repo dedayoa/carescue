@@ -44,51 +44,41 @@ class ACUSSDCallback(views.View):
         if not requester:
             menu_text = "END User Not Found"
         
-        elif text == "":
+        if text == "":
             menu_text = "END Invalid Entry"
             
-        elif text == "1":
-            if not QuerySession.objects.filter(session_id=session_id).exists():
-                menu_text = "END Please Provide Your Coordinates"
-            else:
+        #check if session already exists
+        qs = QuerySession.objects.get(session_id=session_id)
+        
+        if qs:
+            if text == "%s*%s*1"%(qs.loc_cood_x,qs.loc_cood_y):
                 menu_text = "CON Mechanics near you... \n"
                 for mechanic in nearest_mechanics(session_id, 3):
                     m_obj = Mechanic.objects.get(id=mechanic[0])
                     menu_text += "%s, %s \n"%(m_obj.user.first_name, m_obj.phone_1)
                     menu_text += "Press 1 to Call a Mechanic, 0 to end.\n"
-        
-        elif text == "2":
-            if not QuerySession.objects.filter(session_id=session_id).exists():
-                menu_text = "END Please Provide Your Coordinates"
-            else:
+            
+            elif text == "%s*%s*2"%(qs.loc_cood_x,qs.loc_cood_y):
                 menu_text = "CON Towing Vehicles near you... \n"
                 for tow_vehicle in nearest_towing_vehicle(session_id, 3):
                     tv_obj = TowingVehicle.objects.get(id=tow_vehicle[0])
                     menu_text += "%s, %s \n"%(tv_obj.user.first_name, tv_obj.phone_1)
                     menu_text += "Press 1 to Call a Towing Vehicle, 0 to end.\n"
-        
-        elif text == "3":
-            if not QuerySession.objects.filter(session_id=session_id).exists():
-                menu_text = "END Please Provide Your Coordinates"
-            else:
-                menu_text = "END"
-        
-        elif text == "4":
-            if not QuerySession.objects.filter(session_id=session_id).exists():
-                menu_text = "END Please Provide Your Coordinates"
-            else:
-                menu_text = "END"
-        
-        
-        elif text == "1*1":
-            menu_text = "END Calling Mechanics"
+                    
+            elif text == "%s*%s*3"%(qs.loc_cood_x,qs.loc_cood_y):
+                menu_text = "CON Car parts near you... \n"
             
-        elif text == "2*1":
-            menu_text = "END Calling Towing Vehicle"
-        
-        elif text == "0":
-            menu_text = "END Goodbye"
-        
+            elif text == "%s*%s*4"%(qs.loc_cood_x,qs.loc_cood_y):
+                menu_text = "CON Cabs nearest you... \n"
+                
+            elif text == "%s*%s*1*1"%(qs.loc_cood_x,qs.loc_cood_y):
+                menu_text = "END Calling Mechanics"
+                
+            elif text == "%s*%s*2*1"%(qs.loc_cood_x,qs.loc_cood_y):
+                menu_text = "END Calling Towing Vehicle"
+            
+            elif text == "0":
+                menu_text = "END Goodbye"
         
         else:
             #iterate through text and get coordinates
@@ -101,7 +91,7 @@ class ACUSSDCallback(views.View):
                 )
             
             
-            menu_text = "CON Welcome %s. What help do you require?"%(requester.user.first_name)
+            menu_text = "CON Welcome %s. What help do you require? \n"%(requester.user.first_name)
             menu_text += "1. Mechanic \n"
             menu_text += "2. Towing Van \n"
             menu_text += "3. Car Part \n"
