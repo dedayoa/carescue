@@ -43,9 +43,11 @@ class ACUSSDCallback(views.View):
         
         if not requester:
             menu_text = "END User Not Found"
+            return HttpResponse(menu_text, content_type="text/plain", status=200)
         
         if text == "":
-            menu_text = "END Invalid Entry"
+            menu_text = "END Invalid Entry"            
+            return HttpResponse(menu_text, content_type="text/plain", status=200)
             
         #check if session already exists
         try:
@@ -54,30 +56,32 @@ class ACUSSDCallback(views.View):
             loc_x = qs.loc_cood_x*10000
             loc_y = qs.loc_cood_y*10000
             
-            if text == "%s*%s*1"%(loc_x, loc_y):
+            print("%.0f*%.0f*1"%(loc_x, loc_y))
+            
+            if text == "%.0f*%.0f*1"%(loc_x, loc_y):
                 menu_text = "CON Mechanics near you... \n"
                 for mechanic in nearest_mechanics(session_id, 3):
                     m_obj = Mechanic.objects.get(id=mechanic[0])
                     menu_text += "%s, %s \n"%(m_obj.user.first_name, m_obj.phone_1)
-                    menu_text += "Press 1 to Call a Mechanic, 0 to end.\n"
+                menu_text += "Press 1 to Call a Mechanic, 0 to end.\n"
             
-            elif text == "%s*%s*2"%(loc_x, loc_y):
+            elif text == "%.0f*%.0f*2"%(loc_x, loc_y):
                 menu_text = "CON Towing Vehicles near you... \n"
                 for tow_vehicle in nearest_towing_vehicle(session_id, 3):
                     tv_obj = TowingVehicle.objects.get(id=tow_vehicle[0])
                     menu_text += "%s, %s \n"%(tv_obj.user.first_name, tv_obj.phone_1)
-                    menu_text += "Press 1 to Call a Towing Vehicle, 0 to end.\n"
+                menu_text += "Press 1 to Call a Towing Vehicle, 0 to end.\n"
                     
-            elif text == "%s*%s*3"%(loc_x, loc_y):
+            elif text == "%.0f*%.0f*3"%(loc_x, loc_y):
                 menu_text = "CON Car parts near you... \n"
             
-            elif text == "%s*%s*4"%(loc_x, loc_y):
+            elif text == "%.0f*%.0f*4"%(loc_x, loc_y):
                 menu_text = "CON Cabs nearest you... \n"
                 
-            elif text == "%s*%s*1*1"%(loc_x, loc_y):
+            elif text == "%.0f*%.0f*1*1"%(loc_x, loc_y):
                 menu_text = "END Calling Mechanics"
                 
-            elif text == "%s*%s*2*1"%(loc_x, loc_y):
+            elif text == "%.0f*%.0f*2*1"%(loc_x, loc_y):
                 menu_text = "END Calling Towing Vehicle"
             
             elif text == "0":
