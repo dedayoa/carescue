@@ -80,13 +80,13 @@ class ACUSSDCallback(views.View):
                 menu_text = "END"
         
         
-        elif menu_text == "1*1":
+        elif text == "1*1":
             menu_text = "END Calling Mechanics"
             
-        elif menu_text == "2*1":
+        elif text == "2*1":
             menu_text = "END Calling Towing Vehicle"
         
-        elif menu_text == "0":
+        elif text == "0":
             menu_text = "END Goodbye"
         
         
