@@ -63,7 +63,7 @@ class Requester(models.Model):
 ##########################
 
 class QuerySession(models.Model):
-    session_id = models.UUIDField()
+    session_id = models.CharField(max_length=255)
     service_code = models.CharField(max_length=255)
     status = models.BooleanField(default=True) #active or ended
     loc_cood_x = models.DecimalField(max_digits=7, decimal_places=4)
@@ -71,7 +71,7 @@ class QuerySession(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return str(self.session_id)
+        return self.session_id
     
 
 class Query(models.Model):
