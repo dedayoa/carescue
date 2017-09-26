@@ -95,8 +95,8 @@ class ACUSSDCallback(views.View):
             coods = text.split("*")
             QuerySession.objects.create(
                 session_id = session_id,
-                loc_cood_x = coods[0],
-                loc_cood_y = coods[1],
+                loc_cood_x = coods[0]/10000,
+                loc_cood_y = coods[1]/10000,
                 service_code = serviceCode
                 )
             
