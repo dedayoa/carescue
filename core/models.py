@@ -63,6 +63,7 @@ class Requester(models.Model):
 ##########################
 
 class QuerySession(models.Model):
+    requester = models.ForeignKey(Requester, on_delete=models.CASCADE)
     session_id = models.CharField(max_length=255)
     service_code = models.CharField(max_length=255)
     status = models.BooleanField(default=True) #active or ended
@@ -75,7 +76,6 @@ class QuerySession(models.Model):
     
 
 class Query(models.Model):
-    requester = models.ForeignKey(Requester, on_delete=models.CASCADE)
     session = models.ForeignKey(QuerySession, on_delete=models.CASCADE)
     request = models.TextField()
     reply = models.TextField()

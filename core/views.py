@@ -78,6 +78,9 @@ class ACUSSDCallback(views.View):
             elif text == "%.0f*%.0f*4"%(loc_x, loc_y):
                 menu_text = "CON Cabs nearest you... \n"
                 
+            elif text == "%.0f*%.0f*0"%(loc_x, loc_y):
+                menu_text = "END Goodbye \n"
+                
             elif text == "%.0f*%.0f*1*1"%(loc_x, loc_y):
                 menu_text = "END Calling Mechanics"
                 
@@ -91,6 +94,7 @@ class ACUSSDCallback(views.View):
             #iterate through text and get coordinates
             coods = text.split("*")
             QuerySession.objects.create(
+                requester = requester,
                 session_id = session_id,
                 loc_cood_x = int(coods[0])/10000,
                 loc_cood_y = int(coods[1])/10000,
@@ -102,7 +106,8 @@ class ACUSSDCallback(views.View):
             menu_text += "1. Mechanic \n"
             menu_text += "2. Towing Van \n"
             menu_text += "3. Car Part \n"
-            menu_text += "4. Cab"
+            menu_text += "4. Cab \n"
+            menu_text += "0. Quit Session"
             
         return HttpResponse(menu_text, content_type="text/plain", status=200)
         
